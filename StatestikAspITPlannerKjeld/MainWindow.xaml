@@ -46,7 +46,7 @@
                 Background="LightSteelBlue">
 
                     <DVC:Chart.Series>
-                        <DVC:ColumnSeries  Title="{Binding Path=Navn}"
+                        <DVC:ColumnSeries  
                             IndependentValueBinding="{Binding Path=Navn}"
                             DependentValueBinding="{Binding Path=Procent}"
                             >   

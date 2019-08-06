@@ -41,7 +41,10 @@ namespace StatestikAspITPlannerKjeld
                 
                 List<ChartValues> li = DB.getData(student.ID);
 
-                foreach(ChartValues cv in li)
+                List<ChartValues> fr = DB.GetDifrences(student.ID);
+
+
+                foreach (ChartValues cv in li)
                 {
                     antalModulerIalt += cv.Procent;
                 }
@@ -51,7 +54,6 @@ namespace StatestikAspITPlannerKjeld
                 ((PieSeries)mcChart.Series[0]).ItemsSource = li;
 
                 frChart.Title = student.Name + " moduler ialt = " + antalModulerIalt;
-                List<ChartValues> fr = DB.GetDifrences(student.ID);
                 ((ColumnSeries)frChart.Series[0]).ItemsSource = fr;
 
             }
