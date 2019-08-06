@@ -1,13 +1,42 @@
-﻿<Window x:Class="StatestikAspITPlannerKjeld.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:DV="clr-namespace:System.Windows.Controls.DataVisualization;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+        xmlns:DVC="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
         xmlns:local="clr-namespace:StatestikAspITPlannerKjeld"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" x:Class="StatestikAspITPlannerKjeld.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
-        
+        <StackPanel Grid.Column="0">
+            <TextBlock Text="Elev" Margin="0 10 0 0"/>
+            <ComboBox x:Name="cbSElev" Grid.Column="1" ItemsSource="{Binding}" SelectionChanged="CbSElev_SelectionChanged" Margin="0 10 0 0">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Name}"/>
+                            <TextBlock Text=" - "/>
+                            <TextBlock Text="{Binding Team}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+       
+        <DVC:Chart Name="mcChart" Title=""
+            Width="600" Height="350" Margin="0 10 0 0"
+            Background="LightSteelBlue">
+            
+            <DVC:Chart.Series>
+                <DVC:PieSeries Title="{Binding Path=Navn}"
+                    IndependentValueBinding="{Binding Path=Navn}"
+                    DependentValueBinding="{Binding Path=Procent}"
+                    >
+                        
+                    </DVC:PieSeries>
+            </DVC:Chart.Series>
+        </DVC:Chart>
+        </StackPanel>
     </Grid>
 </Window>

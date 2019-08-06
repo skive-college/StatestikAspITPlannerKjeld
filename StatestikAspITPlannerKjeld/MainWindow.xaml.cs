@@ -1,4 +1,5 @@
 ﻿using StatestikAspITPlannerKjeld.Helpers;
+using StatestikAspITPlannerKjeld.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.DataVisualization;
+using System.Windows.Controls.DataVisualization.Charting;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -25,7 +28,22 @@ namespace StatestikAspITPlannerKjeld
         {
             InitializeComponent();
             DB db = new DB();
-            db.getAll();
+            cbSElev.DataContext = db.getAllStudents();
+            
         }
+
+        private void CbSElev_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(cbSElev.SelectedIndex != -1)
+            {
+                Student student = (cbSElev.SelectedItem as Student);
+                mcChart.Title = student.Name;
+                List<ChartValues> li = DB.getData(11);
+                mcChart.Palette = Util.MakePalette(li);
+                ((PieSeries)mcChart.Series[0]).ItemsSource = li;
+            }
+            
+        }
+        
     }
 }
