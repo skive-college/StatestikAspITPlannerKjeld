@@ -137,6 +137,8 @@ namespace StatestikAspITPlannerKjeld.Helpers
             }
             int medfri = 0;
             int udenfri = 0;
+            int mødt = 0;
+            int mødtudenInaktiv = 0;
             for (int i = 0; i < regtypes.Count; i++)
             {
                 if (regtypes[i].CatID == 1)
@@ -145,9 +147,17 @@ namespace StatestikAspITPlannerKjeld.Helpers
                     if (regtypes[i].TypeName != "Fri")
                         udenfri += counts[i];
                 }
+                if (regtypes[i].CatID == 2)
+                {
+                    mødt += counts[i];
+                    if (regtypes[i].TypeName != "Inaktiv")
+                        mødtudenInaktiv += counts[i];
+                }
             }
-            retur.Add(new ChartValues { ID = 1, Navn = "med aftale", Procent = getProcent(ialt, medfri) });
-            retur.Add(new ChartValues { ID = 2, Navn = "uden aftale", Procent = getProcent(ialt, udenfri) });
+            retur.Add(new ChartValues { ID = 1, Navn = "med aftale", Procent = medfri });
+            retur.Add(new ChartValues { ID = 2, Navn = "uden aftale", Procent = udenfri });
+            retur.Add(new ChartValues { ID = 3, Navn = "mødt", Procent = mødt });
+            retur.Add(new ChartValues { ID = 4, Navn = "uden inaktiv", Procent = mødtudenInaktiv });
             return retur;
         }
 
@@ -187,7 +197,7 @@ namespace StatestikAspITPlannerKjeld.Helpers
             }
             for(int i = 0; i < regtypes.Count; i++)
             {
-                retur.Add(new ChartValues {ID = regtypes[i].ID,  Navn = regtypes[i].TypeName, Procent = getProcent(ialt, counts[i])});
+                retur.Add(new ChartValues {ID = regtypes[i].ID,  Navn = regtypes[i].TypeName, Procent =counts[i]});
             }
             return retur;
         }

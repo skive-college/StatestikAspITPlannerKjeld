@@ -36,14 +36,21 @@ namespace StatestikAspITPlannerKjeld
         {
             if(cbSElev.SelectedIndex != -1)
             {
+                int antalModulerIalt = 0;
                 Student student = (cbSElev.SelectedItem as Student);
-                mcChart.Title = student.Name;
+                
                 List<ChartValues> li = DB.getData(student.ID);
+
+                foreach(ChartValues cv in li)
+                {
+                    antalModulerIalt += cv.Procent;
+                }
+
+                mcChart.Title = student.Name + " moduler ialt = " + antalModulerIalt;
                 mcChart.Palette = Util.MakePalette(li);
                 ((PieSeries)mcChart.Series[0]).ItemsSource = li;
 
-                frChart.Title = student.Name;
-
+                frChart.Title = student.Name + " moduler ialt = " + antalModulerIalt;
                 List<ChartValues> fr = DB.GetDifrences(student.ID);
                 ((ColumnSeries)frChart.Series[0]).ItemsSource = fr;
 
