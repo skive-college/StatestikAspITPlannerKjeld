@@ -38,9 +38,15 @@ namespace StatestikAspITPlannerKjeld
             {
                 Student student = (cbSElev.SelectedItem as Student);
                 mcChart.Title = student.Name;
-                List<ChartValues> li = DB.getData(11);
+                List<ChartValues> li = DB.getData(student.ID);
                 mcChart.Palette = Util.MakePalette(li);
                 ((PieSeries)mcChart.Series[0]).ItemsSource = li;
+
+                frChart.Title = student.Name;
+
+                List<ChartValues> fr = DB.GetDifrences(student.ID);
+                ((ColumnSeries)frChart.Series[0]).ItemsSource = fr;
+
             }
             
         }

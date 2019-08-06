@@ -22,14 +22,14 @@ namespace StatestikAspITPlannerKjeld.Helpers
                 SolidColorBrush brush = null;
                 switch (item.ID)
                 {
-                    case 1: brush = new SolidColorBrush(Colors.DarkRed); break;
-                    case 2: brush = new SolidColorBrush(Colors.DarkGreen); break;
-                    case 3: brush = new SolidColorBrush(Colors.Magenta); break;
-                    case 4: brush = new SolidColorBrush(Colors.Goldenrod); break;
-                    case 5: brush = new SolidColorBrush(Colors.Purple); break;
-                    case 6: brush = new SolidColorBrush(Colors.Olive); break;
-                    case 7: brush = new SolidColorBrush(Colors.LightSteelBlue); break;
-                    default: brush = new SolidColorBrush(Colors.White); break;
+                    case 1: brush = new SolidColorBrush(Colors.LightBlue); break;
+                    case 2: brush = new SolidColorBrush(Colors.DarkOrange); break;
+                    case 3: brush = new SolidColorBrush(Colors.Red); break;
+                    case 4: brush = new SolidColorBrush(Colors.Green); break;
+                    case 5: brush = new SolidColorBrush(Colors.LightGreen); break;
+                    case 6: brush = new SolidColorBrush(Colors.DarkKhaki); break;
+                    case 7: brush = new SolidColorBrush(Colors.Yellow); break;
+                    default: brush = new SolidColorBrush(Colors.Black); break;
                 }
                 style.Setters.Add(new Setter() { Property = Control.BackgroundProperty, Value = brush });
                 rd.Add("DataPointStyle", style);

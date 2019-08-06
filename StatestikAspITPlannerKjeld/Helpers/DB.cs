@@ -69,6 +69,88 @@ namespace StatestikAspITPlannerKjeld.Helpers
             return retur;
         }
 
+       
+
+        private static List<regType> getAllTypes(int catID)
+        {
+            List<regType> retur = new List<regType>();
+            SqlConnection cnn = new SqlConnection(conString);
+
+            cnn.Open();
+
+            SqlCommand cmd;
+            String sql = "SELECT * FROM RegistrationTypes where CatID = @CatID";
+
+            cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("CatID", catID);
+            using (SqlDataReader oReader = cmd.ExecuteReader())
+            {
+                while (oReader.Read())
+                {
+                    retur.Add(
+                        new regType
+                        {
+                            ID = int.Parse(oReader["ID"].ToString()),
+                            TypeName = oReader["TypeName"].ToString(),
+                            CatID = int.Parse(oReader["CatID"].ToString())
+
+                        });
+                }
+
+            }
+            return retur;
+        }
+
+        public static List<ChartValues> GetDifrences(int sID)
+        {
+            List<ChartValues> retur = new List<ChartValues>();
+            SqlConnection cnn = new SqlConnection(conString);
+            List<regType> regtypes = getAllTypes();
+            int[] counts = new int[regtypes.Count];
+            cnn.Open();
+
+            SqlCommand cmd;
+            String sql = "SELECT * FROM Presents p, Students s where p.StudentID = @StudentID ";
+
+            cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("StudentID", sID);
+            int ialt = 0;
+            using (SqlDataReader oReader = cmd.ExecuteReader())
+            {
+                while (oReader.Read())
+                {
+                    for (int i = 0; i < regtypes.Count; i++)
+                    {
+                        if (int.Parse(oReader["Model1"].ToString()) == regtypes[i].ID)
+                            counts[i]++;
+                        if (int.Parse(oReader["Model2"].ToString()) == regtypes[i].ID)
+                            counts[i]++;
+                        if (int.Parse(oReader["Model3"].ToString()) == regtypes[i].ID)
+                            counts[i]++;
+                        if (int.Parse(oReader["Model4"].ToString()) == regtypes[i].ID)
+                            counts[i]++;
+
+                        ialt++;
+                    }
+                }
+
+            }
+            int medfri = 0;
+            int udenfri = 0;
+            for (int i = 0; i < regtypes.Count; i++)
+            {
+                if (regtypes[i].CatID == 1)
+                {
+                    medfri += counts[i];
+                    if (regtypes[i].TypeName != "Fri")
+                        udenfri += counts[i];
+                }
+            }
+            retur.Add(new ChartValues { ID = 1, Navn = "med aftale", Procent = getProcent(ialt, medfri) });
+            retur.Add(new ChartValues { ID = 2, Navn = "uden aftale", Procent = getProcent(ialt, udenfri) });
+            return retur;
+        }
+
         public static List<ChartValues> getData(int sID)
         {
             List<ChartValues> retur = new List<ChartValues>();
